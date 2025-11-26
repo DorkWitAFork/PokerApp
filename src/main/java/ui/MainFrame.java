@@ -126,27 +126,27 @@ public class MainFrame
     //What the buttons do when they are clicked
     private void newGamePress()
     {
-        System.out.println("New Game Press");
+        new GamePanel();
     }
 
     private void playerLookupPress()
     {
-        System.out.println("Lookup Press");
+        new PlayerLookupPanel();
     }
 
     private void reportPress()
     {
-        System.out.println("Report Press");
+        new ReportsPanel();
     }
 
     private void leaderboardPress()
     {
-        System.out.println("Leaderboard Press");
+        new LeaderboardPanel();
     }
 
     private void createPress()
     {
-        System.out.println("Create Press");
+        new PlayerCreationPanel();
     }
 
 
