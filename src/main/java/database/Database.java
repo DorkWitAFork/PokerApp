@@ -10,15 +10,18 @@ public class Database {
     private static Connection connection = null;
 
     // One connection for the whole app
-    public static Connection getConnection() {
-        if (connection == null) {
-            try {
-                connection = DriverManager.getConnection(URL);
-                System.out.println("Connected to the SQLite Database");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+    public static Connection getConnection() throws SQLException {
+        connection = DriverManager.getConnection(URL);
+        System.out.println("Connected to the DB");
         return connection;
+//        if (connection == null) {
+//            try {
+//                connection = DriverManager.getConnection(URL);
+//                System.out.println("Connected to the SQLite Database");
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return connection;
     }
 }

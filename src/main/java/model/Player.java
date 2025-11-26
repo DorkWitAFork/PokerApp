@@ -48,4 +48,12 @@ public class Player {
         return created_at;
     }
 
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", name=" + name +
+                ", createdAt=" + created_at + "}";
+    }
+
 }

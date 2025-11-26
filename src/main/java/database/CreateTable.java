@@ -16,7 +16,6 @@ public class CreateTable {
                     created_at TEXT NOT NULL);
                 """
             );
-            System.out.println("player table creation worked.");
 
             statement.execute("""
                 CREATE TABLE IF NOT EXISTS games (
@@ -26,7 +25,6 @@ public class CreateTable {
                     closed INTEGER DEFAULT 0);
                 """
             );
-            System.out.println("games table creation worked.");
 
             statement.execute("""
                 CREATE TABLE IF NOT EXISTS  game_participants(
@@ -39,9 +37,6 @@ public class CreateTable {
                     FOREIGN KEY (player_id) REFERENCES players(id));
                 """
             );
-            System.out.println("game_participants table creation worked.");
-
-            System.out.println("If you're seeing this, all tables created.");
 
         } catch (SQLException e) {
             e.printStackTrace();
