@@ -1,6 +1,8 @@
 package ui;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame 
 {
@@ -14,6 +16,7 @@ public class MainFrame
         mainPanel = new JPanel();
         setupButtons();
         setupFrame();
+        setupListen();
         
     }
 
@@ -25,7 +28,7 @@ public class MainFrame
         mainFrame.setMinimumSize(new Dimension(500, 200));
         mainFrame.setResizable(false);
         mainFrame.setVisible(true);
-
+        mainFrame.setLocationRelativeTo(null);
         //Add the panel to hold the buttons
         mainFrame.add(mainPanel);
 
@@ -42,6 +45,7 @@ public class MainFrame
 
     private void setupButtons()
     {
+        //Create the buttons and their looks
         newGameButton = new JButton("Create New Game");
         newGameButton.setContentAreaFilled(false);
         newGameButton.setBackground(Color.GRAY);
@@ -63,14 +67,14 @@ public class MainFrame
         reportButton.setVisible(true);
         reportButton.setOpaque(true);
 
-        leaderboardButton = new JButton("Player Lookup");
+        leaderboardButton = new JButton("Leaderboard");
         leaderboardButton.setContentAreaFilled(false);
         leaderboardButton.setBackground(Color.GRAY);
         leaderboardButton.setPreferredSize(new Dimension(200, 30));
         leaderboardButton.setVisible(true);
         leaderboardButton.setOpaque(true);
 
-        createButton = new JButton("Player Lookup");
+        createButton = new JButton("Player Creation");
         createButton.setContentAreaFilled(false);
         createButton.setBackground(Color.GRAY);
         createButton.setPreferredSize(new Dimension(200, 30));
@@ -79,4 +83,72 @@ public class MainFrame
 
         
     }
+
+    //The method that makes the buttons actually DO something
+    private void setupListen()
+    {
+        newGameButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                newGamePress();
+            }
+        });
+
+        playerLookupButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                playerLookupPress();
+            }
+        });
+
+        reportButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                reportPress();
+            }
+        });
+
+        leaderboardButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                leaderboardPress();
+            }
+        });
+
+        createButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                createPress();
+            }
+        });
+    }
+
+    //What the buttons do when they are clicked
+    private void newGamePress()
+    {
+        System.out.println("New Game Press");
+    }
+
+    private void playerLookupPress()
+    {
+        System.out.println("Lookup Press");
+    }
+
+    private void reportPress()
+    {
+        System.out.println("Report Press");
+    }
+
+    private void leaderboardPress()
+    {
+        System.out.println("Leaderboard Press");
+    }
+
+    private void createPress()
+    {
+        System.out.println("Create Press");
+    }
+
+
+
 }
