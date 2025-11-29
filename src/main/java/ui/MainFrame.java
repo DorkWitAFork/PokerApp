@@ -46,7 +46,7 @@ public class MainFrame
     private void setupButtons()
     {
         //Create the buttons and their looks
-        newGameButton = new JButton("Create New Game");
+        newGameButton = new JButton("Set Up Game");
         newGameButton.setContentAreaFilled(false);
         newGameButton.setBackground(Color.GRAY);
         newGameButton.setPreferredSize(new Dimension(200, 30));

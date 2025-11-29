@@ -20,7 +20,7 @@ public class LeaderboardPanel
     //set some default behaviors and such
     private void setupFrame()
     {
-        thisFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        thisFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         thisFrame.setMinimumSize(new Dimension(750, 750));
         thisFrame.setResizable(false);
         thisFrame.setVisible(true);
