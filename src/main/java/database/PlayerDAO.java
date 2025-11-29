@@ -17,7 +17,7 @@ import java.util.Optional;
         created_at TEXT NOT NULL
  */
 public class PlayerDAO {
-    private Connection connection;
+    private final Connection connection;
 
     // CONSTRUCTOR
     public PlayerDAO(Connection connection) {
