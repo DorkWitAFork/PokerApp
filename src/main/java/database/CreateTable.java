@@ -22,6 +22,8 @@ public class CreateTable {
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     start_time TEXT NOT NULL,
                     end_time TEXT,
+                    game_money_in INTEGER NOT NULL,
+                    game_money_out INTEGER NOT NULL,
                     closed INTEGER DEFAULT 0);
                 """
             );

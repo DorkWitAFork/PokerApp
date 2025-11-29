@@ -14,6 +14,8 @@ public class Database {
         connection = DriverManager.getConnection(URL);
         System.out.println("Connected to the DB");
         return connection;
+        // The code below has been commented out but kept for now.
+        // The responsibility of closing the connection will be with the caller of this function elsewhere.
 //        if (connection == null) {
 //            try {
 //                connection = DriverManager.getConnection(URL);
