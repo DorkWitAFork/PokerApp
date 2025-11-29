@@ -12,6 +12,17 @@ public class Game {
     private boolean closed;
     private List<GameParticipant> game_participants;
 
+    // Empty constructor for the DAO to work with.
+    // This is the main one we will work with. Creating a new game will call this constructor.
+    // The DAO will fill this with data upon creation, such as id, start time, and moneyIn.
+    // Once the game is over and endGame() is called from the DAO, closed will be set to true.
+    // It will also update the end_time and gameMoneyOut.
+    // For the sake of the MVP, we will not allow the admin to add users to a game once it has been started.
+    // This means that for now, the only time the list of game participants is updated is on the initial creation screen.
+    // This means the DAO is passed the list of game participants from the start and will write that to the game participant table.
+    public Game() {
+        this.closed = false;
+    }
 
     // This is a fully filled constructor to be used when reading from the DB.
     public Game(int gameMoneyIn, int gameMoneyOut, LocalDateTime start_time,
@@ -26,9 +37,9 @@ public class Game {
     }
 
     // This will be a new game constructor where the DB will assign some other attributes.
-    public Game(int gameMoneyIn, int gameMoneyOut, LocalDateTime start_time) {
+    // Note: might not use this one honestly. Keeping it for now.
+    public Game(int gameMoneyIn, LocalDateTime start_time) {
         this.gameMoneyIn = gameMoneyIn;
-        this.gameMoneyOut = gameMoneyOut;
         this.start_time = start_time;
         this.closed = false;
     }
@@ -65,11 +76,11 @@ public class Game {
         return end_time;
     }
 
-    public void setID(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public int getID() {
+    public int getId() {
         return id;
     }
 
