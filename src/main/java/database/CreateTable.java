@@ -40,6 +40,15 @@ public class CreateTable {
                 """
             );
 
+            statement.execute("""
+                CREATE TABLE IF NOT EXISTS player_game_keys(
+                game_id INTEGER NOT NULL,
+                player_id INTEGER NOT NULL,
+                FOREIGN KEY (game_id) REFERENCES games(id),
+                FOREIGN KEY (player_id) REFERENCES players(id));
+                """
+            );
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

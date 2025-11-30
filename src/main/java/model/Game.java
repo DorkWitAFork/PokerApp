@@ -24,6 +24,12 @@ public class Game {
         this.closed = false;
     }
 
+    // Temporary constructor that will be used for some testing.
+    public Game(List<GameParticipant> participants) {
+        this.game_participants = participants;
+        this.closed = false;
+    }
+
     // This is a fully filled constructor to be used when reading from the DB.
     public Game(int gameMoneyIn, int gameMoneyOut, LocalDateTime start_time,
                 LocalDateTime end_time, int id, boolean closed, List<GameParticipant> game_participants) {
@@ -60,19 +66,19 @@ public class Game {
         return gameMoneyOut;
     }
 
-    public void setStart_time(LocalDateTime start_time) {
+    public void setStartTime(LocalDateTime start_time) {
         this.start_time = start_time;
     }
 
-    public LocalDateTime getStart_time() {
+    public LocalDateTime getStartTime() {
         return start_time;
     }
 
-    public void setEnd_time(LocalDateTime end_time) {
+    public void setEndTime(LocalDateTime end_time) {
         this.end_time = end_time;
     }
 
-    public LocalDateTime getEnd_time() {
+    public LocalDateTime getEndTime() {
         return end_time;
     }
 
@@ -92,11 +98,11 @@ public class Game {
         return closed;
     }
 
-    public void setGame_participants(List<GameParticipant> game_participants) {
+    public void setGameParticipants(List<GameParticipant> game_participants) {
         this.game_participants = game_participants;
     }
 
-    public List<GameParticipant> getGame_participants() {
+    public List<GameParticipant> getGameParticipants() {
         return game_participants;
     }
 

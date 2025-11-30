@@ -28,10 +28,9 @@ public class GameParticipant {
     }
 
     // Constructor to be used when the game is still being created and does not have a game id assigned yet.
-    public GameParticipant(int playerId, int moneyIn, int moneyOut) {
+    public GameParticipant(int playerId, int moneyIn) {
         this.playerId = playerId;
         this.moneyIn = moneyIn;
-        this.moneyOut = moneyOut;
     }
 
     public void setMoneyIn(int moneyIn) {
