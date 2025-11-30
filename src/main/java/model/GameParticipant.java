@@ -78,6 +78,7 @@ public class GameParticipant {
         return "Participant{id=" + id +
                 ", gameId=" + gameId +
                 ", playerId=" + playerId +
+                ", moneyIn=" + moneyIn +
                 "}";
     }
 }

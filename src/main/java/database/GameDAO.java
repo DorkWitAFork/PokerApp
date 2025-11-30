@@ -38,7 +38,6 @@ public class GameDAO {
     public Game startGame(Game game) {
         System.out.println("Start game called!");
 
-        // Todo: implement logic. Should add to the passed game object the start time, participants, money in, and (maybe) id.
         String sql = """
                     INSERT INTO games (start_time, game_money_in, game_money_out)
                     VALUES (?,?,?)
@@ -73,23 +72,26 @@ public class GameDAO {
             }
 
             String add_players = """
-                    INSERT INTO game_player_keys (game_id, player_id)
+                    INSERT INTO player_game_keys (game_id, player_id)
                     VALUES (?,?)
                     """;
-
-            PreparedStatement addPlayersStatement = connection.prepareStatement(add_players);
-            List<GameParticipant> participants = game.getGameParticipants();
-            if (participants != null) {
-                for (GameParticipant participant : participants) {
-                    addPlayersStatement.setInt(1, game.getId());
-                    addPlayersStatement.setInt(2, participant.getPlayerId());
-                    addPlayersStatement.addBatch();;
+            try (PreparedStatement addPlayersStatement = connection.prepareStatement(add_players)) {
+                List<GameParticipant> participants = game.getGameParticipants();
+                if (participants != null) {
+                    for (GameParticipant participant : participants) {
+                        addPlayersStatement.setInt(1, game.getId());
+                        addPlayersStatement.setInt(2, participant.getPlayerId());
+                        addPlayersStatement.addBatch();;
+                    }
+                    addPlayersStatement.executeBatch();
                 }
-                addPlayersStatement.executeBatch();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
 
+
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+           e.printStackTrace();
         }
         return game;
     }
@@ -117,7 +119,7 @@ public class GameDAO {
         game.setClosed(true);
 
         String sql = """
-                INSERT INTO TABLE games(end_time, game_money_out, game_money_out)
+                INSERT INTO games(end_time, game_money_out, game_money_out)
                 VALUES (?,?,?)
                 """;
 
