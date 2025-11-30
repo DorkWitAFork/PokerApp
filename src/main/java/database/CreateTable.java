@@ -23,7 +23,7 @@ public class CreateTable {
                     start_time TEXT NOT NULL,
                     end_time TEXT,
                     game_money_in INTEGER NOT NULL,
-                    game_money_out INTEGER NOT NULL,
+                    game_money_out INTEGER NOT NULL DEFAULT 0,
                     closed INTEGER DEFAULT 0);
                 """
             );

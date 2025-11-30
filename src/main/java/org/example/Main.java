@@ -1,16 +1,20 @@
 package org.example;
 
 import model.Player;
+import model.Game;
+import model.GameParticipant;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.ArrayList;
 
 import ui.MainFrame;
 
 import database.Database;
 import database.PlayerDAO;
 import database.CreateTable;
-
+import database.GameDAO;
 
 public class Main {
     public static void main(String[] args) {
@@ -25,12 +29,28 @@ public class Main {
             PlayerDAO playerDAO = new PlayerDAO(connection);
 
             // Create a new player
-            Player player = new Player("Spencer");
+            Player player1 = new Player("Spencer");
+            Player player2 = new Player("Alex");
+            Player player3 = new Player("Nate");
 
             // Add the player
-            playerDAO.addPlayer(player);
+            playerDAO.addPlayer(player1);
+            playerDAO.addPlayer(player2);
+            playerDAO.addPlayer(player3);
 
-            System.out.println("Player inserted: " + player);
+            System.out.println("Player inserted: " + player1);
+            System.out.println("Player inserted: " + player2);
+            System.out.println("Player inserted: " + player3);
+
+            GameDAO gameDAO = new GameDAO(connection);
+
+            List<GameParticipant> participants = new ArrayList<GameParticipant>();
+            GameParticipant part1 = new GameParticipant(3, 5000);
+            GameParticipant part2 = new GameParticipant(3, 5000);
+            GameParticipant part3 = new GameParticipant(3, 5000);
+
+            Game game = new Game(participants);
+            gameDAO.startGame(game);
 
         } catch (Exception e) {
             e.printStackTrace();

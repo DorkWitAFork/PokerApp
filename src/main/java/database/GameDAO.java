@@ -40,8 +40,8 @@ public class GameDAO {
 
         // Todo: implement logic. Should add to the passed game object the start time, participants, money in, and (maybe) id.
         String sql = """
-                    INSERT INTO games (start_time, game_money_in)
-                    VALUES (?,?)
+                    INSERT INTO games (start_time, game_money_in, game_money_out)
+                    VALUES (?,?,?)
                 """;
 
         // Assuming the game's start time has not been established, set it to right now.
@@ -53,6 +53,7 @@ public class GameDAO {
                 connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, game.getStartTime().toString());
             statement.setInt(2, game.getGameMoneyIn());
+            statement.setInt(3,0);
 
             // Update the DB Rows
             int rows = statement.executeUpdate();
@@ -116,7 +117,7 @@ public class GameDAO {
         game.setClosed(true);
 
         String sql = """
-                INSERT INTO TABLE games(end_time, game_money_out, closed)
+                INSERT INTO TABLE games(end_time, game_money_out, game_money_out)
                 VALUES (?,?,?)
                 """;
 
