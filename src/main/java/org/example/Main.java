@@ -46,8 +46,12 @@ public class Main {
 
             List<GameParticipant> participants = new ArrayList<GameParticipant>();
             GameParticipant part1 = new GameParticipant(3, 5000);
-            GameParticipant part2 = new GameParticipant(3, 5000);
-            GameParticipant part3 = new GameParticipant(3, 5000);
+            GameParticipant part2 = new GameParticipant(4, 5000);
+            GameParticipant part3 = new GameParticipant(5, 5000);
+
+            System.out.println("GP inserted: " + part1);
+            System.out.println("GP inserted: " + part2);
+            System.out.println("GP inserted: " + part3);
 
             Game game = new Game(participants);
             gameDAO.startGame(game);
