@@ -6,7 +6,6 @@ public class LeaderboardPanel
     //these will be the main panel and frame, i just thought 'this' was easier to type
     private JFrame thisFrame;
     private JPanel thisPanel;
-
     private JPanel topPanel, rightPanel, leftPanel;
     
 
@@ -50,4 +49,6 @@ public class LeaderboardPanel
         
 
     }
+
+
 }

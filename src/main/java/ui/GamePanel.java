@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import database.GameDAO;
+import model.Game;
 
 public class GamePanel 
 {
@@ -16,6 +18,7 @@ public class GamePanel
     private JFrame thisFrame;
     private JPanel thisPanel;
     private JButton startButton, endButton;
+    private Game game;
 
     public GamePanel()
     {
@@ -90,11 +93,12 @@ public class GamePanel
     //Action methods
     private void endPress()
     {
-
+        GameDAO.endGame(game);
     }
 
     private void startPress()
     {
-
+        
+        GameDAO.startGame(game);
     }
 }
