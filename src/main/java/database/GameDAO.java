@@ -35,7 +35,7 @@ public class GameDAO {
         this.connection = connection;
     }
 
-    public Game startGame(Game game) {
+    public void startGame(Game game) {
         System.out.println("Start game called!");
 
         String sql = """
@@ -44,15 +44,25 @@ public class GameDAO {
                 """;
 
         // Assuming the game's start time has not been established, set it to right now.
-        if(game.getStartTime() == null) {
+        if (game.getStartTime() == null) {
             game.setStartTime(LocalDateTime.now());
         }
 
-        try(PreparedStatement statement =
-                connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        List<GameParticipant> participants = game.getGameParticipants();
+
+        if (participants != null) {
+            int totalIn = 0;
+            for (GameParticipant participant : participants) {
+                totalIn += participant.getMoneyIn();
+            }
+            game.setGameMoneyIn(totalIn);
+        }
+
+        try (PreparedStatement statement =
+                     connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, game.getStartTime().toString());
             statement.setInt(2, game.getGameMoneyIn());
-            statement.setInt(3,0);
+            statement.setInt(3, 0);
 
             // Update the DB Rows
             int rows = statement.executeUpdate();
@@ -76,12 +86,11 @@ public class GameDAO {
                     VALUES (?,?)
                     """;
             try (PreparedStatement addPlayersStatement = connection.prepareStatement(add_players)) {
-                List<GameParticipant> participants = game.getGameParticipants();
                 if (participants != null) {
                     for (GameParticipant participant : participants) {
                         addPlayersStatement.setInt(1, game.getId());
                         addPlayersStatement.setInt(2, participant.getPlayerId());
-                        addPlayersStatement.addBatch();;
+                        addPlayersStatement.addBatch();
                     }
                     addPlayersStatement.executeBatch();
                 }
@@ -91,18 +100,17 @@ public class GameDAO {
 
 
         } catch (SQLException e) {
-           e.printStackTrace();
+            e.printStackTrace();
         }
-        return game;
     }
 
-    public Game endGame(Game game) {
+    public void endGame(Game game) {
         System.out.println("End game called!");
         // endGame should write the end_time, total money out (calculated from adding up player totals), and
         // update closed to true
 
         // Set end time to now, the time at which endGame() is called.
-        if(game.getEndTime() == null) {
+        if (game.getEndTime() == null) {
             game.setEndTime(LocalDateTime.now());
         }
 
@@ -110,24 +118,32 @@ public class GameDAO {
 
         // Total up the game money out from each participant's total money out.
         if (participants != null) {
+            int totalOut = 0;
             for (GameParticipant participant : participants) {
-                game.setGameMoneyOut(game.getGameMoneyOut() + participant.getMoneyOut());
+                totalOut += participant.getMoneyOut();
             }
+            game.setGameMoneyOut(totalOut);
         }
 
         // Mark the game as closed.
         game.setClosed(true);
 
         String sql = """
-                INSERT INTO games(end_time, game_money_out, game_money_out)
-                VALUES (?,?,?)
+                UPDATE games
+                SET end_time = ?, game_money_out = ?, closed = ?
+                WHERE id = ?
                 """;
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
 
+            System.out.println("end time=" +game.getEndTime());
+            System.out.println("moneyOut=" +game.getGameMoneyOut());
+            System.out.println("closed=" + game.getClosed());
+
             statement.setString(1, game.getEndTime().toString());
             statement.setInt(2, game.getGameMoneyOut());
             statement.setBoolean(3, game.getClosed());
+            statement.setInt(4, game.getId());
 
             int rows = statement.executeUpdate();
 
@@ -135,10 +151,10 @@ public class GameDAO {
                 throw new SQLException("Error occurred, could not update end game details.");
             }
 
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return game;
     }
 }

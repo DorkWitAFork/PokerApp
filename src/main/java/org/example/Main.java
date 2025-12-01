@@ -48,6 +48,9 @@ public class Main {
             GameParticipant part1 = new GameParticipant(3, 5000);
             GameParticipant part2 = new GameParticipant(4, 5000);
             GameParticipant part3 = new GameParticipant(5, 5000);
+            participants.add(part1);
+            participants.add(part2);
+            participants.add(part3);
 
             System.out.println("GP inserted: " + part1);
             System.out.println("GP inserted: " + part2);
@@ -55,6 +58,7 @@ public class Main {
 
             Game game = new Game(participants);
             gameDAO.startGame(game);
+            gameDAO.endGame(game);
 
         } catch (Exception e) {
             e.printStackTrace();
