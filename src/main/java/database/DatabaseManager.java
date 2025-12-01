@@ -25,8 +25,6 @@ public class DatabaseManager {
         }
         return instance;
     }
-
-
     // One connection for the whole app
     public Connection getConnection() {
        return connection;
