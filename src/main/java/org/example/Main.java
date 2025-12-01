@@ -5,14 +5,12 @@ import model.Game;
 import model.GameParticipant;
 
 import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 import java.util.ArrayList;
 
 import ui.MainFrame;
 
-import database.Database;
+import database.DatabaseManager;
 import database.PlayerDAO;
 import database.CreateTable;
 import database.GameDAO;
@@ -25,7 +23,7 @@ public class Main {
         CreateTable.initialize();
 
         // Try testing the player class. Establish connection to the database.
-        try (Connection connection = Database.getConnection()) {
+        try (Connection connection = DatabaseManager.getInstance().getConnection()) {
 
             // Create a new playerDAO and pass it the DB connection.
             PlayerDAO playerDAO = new PlayerDAO(connection);
