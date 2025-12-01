@@ -5,8 +5,9 @@ import java.sql.Statement;
 
 public class CreateTable {
     public static void initialize() {
-        try (Connection connection = Database.getConnection()) {
-            Statement statement = connection.createStatement();
+
+        Connection connection = DatabaseManager.getInstance().getConnection();
+        try (Statement statement = connection.createStatement()) {
 
             // Create the players table
             statement.execute("""
