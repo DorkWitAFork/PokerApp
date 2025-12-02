@@ -3,6 +3,7 @@ import model.Game;
 import model.GameParticipant;
 
 import java.sql.*;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -21,11 +22,9 @@ import java.util.ArrayList;
 
 public class GameParticipantDAO {
 
-    private final Connection connection;
+    static final Connection connection = DatabaseManager.getInstance().getConnection();
 
     public GameParticipantDAO(Connection connection) {
-
-        this.connection = connection;
     }
 
     public void insert(GameParticipant participant) {
@@ -34,10 +33,30 @@ public class GameParticipantDAO {
         // INSERT INTO game_participants
     }
 
-    public List<GameParticipant> findByGameId(int gameId) {
-        // Todo: implement logic to return the list of game participants from a specific game.
-        // SELECT * FROM game_participants WHERE game_id = ?
-        return null;
+    /**
+     *
+     * @param gameId The int representation of a game
+     * @return A linked list of GameParticipants
+     * @throws SQLException is thrown when either the query fails
+     */
+    public List<GameParticipant> findByGameId(int gameId) throws SQLException {
+        List<GameParticipant> results;
+        PreparedStatement smt = connection.prepareStatement(
+                """
+                SELECT * FROM game_participants where game_id = ?"""
+        );
+        smt.setInt(1, gameId);
+
+        ResultSet query_values = smt.executeQuery();
+        results = new LinkedList<>();
+        if (!isResultSetEmpty(query_values)) {
+            while (query_values.next()) {
+                //TODO: Do you want the possibility of null values populating this list?
+                results.add(mapRowToObj(query_values));
+            }
+        }
+
+        return results;
     }
 
     public GameParticipant findByGameAndPlayer(int gameId, int playerId) {
@@ -78,6 +97,40 @@ public class GameParticipantDAO {
         // This can be good to get all games a player has ever played
         // SELECT * FROM game_participants WHERE player_id = ?
         return null;
+    }
+
+    private boolean isResultSetEmpty(ResultSet rs) {
+        boolean result = true;
+        int count = 0;
+        try {
+            if (rs.last()) {
+                count = rs.getRow();
+                rs.beforeFirst();
+            }
+        } catch (SQLException e) {
+            return result;
+        }
+        if (count > 0) {
+            result = false;
+        }
+        return result;
+    }
+
+    private GameParticipant mapRowToObj(ResultSet rs) {
+        GameParticipant gp = null;
+        try {
+            int id = rs.getInt("id");
+            int gameId = rs.getInt("game_id");
+            int playerId = rs.getInt("player_id");
+            int moneyIn = rs.getInt("buy_in");
+            int moneyOut = rs.getInt("cash_out");
+
+            gp = new GameParticipant(id, gameId, playerId, moneyIn, moneyOut);
+        } catch (SQLException e) {
+            return gp;
+        }
+
+        return gp;
     }
 }
 
