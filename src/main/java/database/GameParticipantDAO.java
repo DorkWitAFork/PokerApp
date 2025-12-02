@@ -3,7 +3,6 @@ import model.Game;
 import model.GameParticipant;
 
 import java.sql.*;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -40,29 +39,40 @@ public class GameParticipantDAO {
      * @throws SQLException is thrown when either the query fails
      */
     public List<GameParticipant> findByGameId(int gameId) throws SQLException {
-        List<GameParticipant> results;
-        PreparedStatement smt = connection.prepareStatement(
+        List<GameParticipant> results = new ArrayList<>();
+        try (PreparedStatement smt = connection.prepareStatement(
                 """
                 SELECT * FROM game_participants where game_id = ?"""
-        );
-        smt.setInt(1, gameId);
+        )) {
+            smt.setInt(1, gameId);
 
-        ResultSet query_values = smt.executeQuery();
-        results = new LinkedList<>();
-        if (!isResultSetEmpty(query_values)) {
-            while (query_values.next()) {
-                //TODO: Do you want the possibility of null values populating this list?
-                results.add(mapRowToObj(query_values));
+            try (ResultSet rs = smt.executeQuery()) {
+                while (rs.next()) {
+                    //TODO: Do you want the possibility of null values populating this list?
+                    results.add(mapRowToObj(rs));
+                }
             }
         }
 
         return results;
     }
 
-    public GameParticipant findByGameAndPlayer(int gameId, int playerId) {
+    public GameParticipant findByGameAndPlayer(int gameId, int playerId) throws SQLException {
         // Might not be strictly necessary. Could be useful when updating one player's cash-out.
         // SELECT * FROM game_participants WHERE game_id = ? AND player_id = ?
-        return null;
+        GameParticipant result = null;
+        try (PreparedStatement smt = connection.prepareStatement("""
+                SELECT * FROM game_participants where game_id = ? and player_id = ?""")) {
+            smt.setInt(1, gameId);
+            smt.setInt(2, playerId);
+
+            try (ResultSet rs = smt.executeQuery()) {
+                while (rs.next()) {
+                    result = mapRowToObj(rs);
+                }
+            }
+        }
+        return result;
     }
 
     public void updateCashOut(int gameId, int playerId, int cashOut) {
@@ -97,23 +107,6 @@ public class GameParticipantDAO {
         // This can be good to get all games a player has ever played
         // SELECT * FROM game_participants WHERE player_id = ?
         return null;
-    }
-
-    private boolean isResultSetEmpty(ResultSet rs) {
-        boolean result = true;
-        int count = 0;
-        try {
-            if (rs.last()) {
-                count = rs.getRow();
-                rs.beforeFirst();
-            }
-        } catch (SQLException e) {
-            return result;
-        }
-        if (count > 0) {
-            result = false;
-        }
-        return result;
     }
 
     private GameParticipant mapRowToObj(ResultSet rs) {
