@@ -57,7 +57,7 @@ public class PlayerLookupPanel
 		bottomPanel.setPreferredSize(new Dimension(0, 20));
 
         midPanel = new JPanel();
-        midPanel.setBackground(Color.GRAY);
+        midPanel.setBackground(Color.LIGHT_GRAY);
 		midPanel.setLayout(null);
 		midPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 		midPanel.setVisible(true);
