@@ -40,6 +40,8 @@ public class PlayerLookupPanel
         //add some stuff
         thisFrame.add(topPanel, BorderLayout.NORTH);
         thisFrame.add(midPanel, BorderLayout.CENTER);
+        thisFrame.add(bottomPanel, BorderLayout.SOUTH);
+        thisFrame.add(rightPanel, BorderLayout.EAST);
 
 
     }
@@ -47,25 +49,43 @@ public class PlayerLookupPanel
     private void setupPanels()
     {
         topPanel = new JPanel();
-        topPanel.setBackground(Color.BLACK);
+        topPanel.setBackground(Color.GREEN);
 		topPanel.setPreferredSize(new Dimension(0, 50));
 		topPanel.setVisible(true);
+        topPanel.add(searchbar);
+        topPanel.add(searchButton);
 
         bottomPanel = new JPanel();
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 45, 0));
 		bottomPanel.setVisible(true);
 		bottomPanel.setPreferredSize(new Dimension(0, 20));
+        bottomPanel.setBackground(Color.BLACK);
 
         midPanel = new JPanel();
         midPanel.setBackground(Color.LIGHT_GRAY);
 		midPanel.setLayout(null);
 		midPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
 		midPanel.setVisible(true);
+
+        rightPanel = new JPanel();
+        rightPanel.setBackground(Color.GRAY);
+		rightPanel.setLayout(null);
+		rightPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 5));
+        rightPanel.setPreferredSize(new Dimension(200, 50));
+		rightPanel.setVisible(true);
     }
 
     private void setupElements()
     {
+        searchbar = new JTextField(20);
 
+
+        searchButton = new JButton("SEARCH");
+        searchButton.setContentAreaFilled(false);
+        searchButton.setBackground(Color.GRAY);
+        searchButton.setPreferredSize(new Dimension(100, 20));
+        searchButton.setVisible(true);
+        searchButton.setOpaque(true);
     }
 
     private void setupListen()
