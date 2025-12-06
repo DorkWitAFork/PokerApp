@@ -2,6 +2,8 @@ package ui;
 import javax.swing.*;
 import javax.swing.border.Border;
 
+import model.Player;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,7 +51,7 @@ public class PlayerLookupPanel
     private void setupPanels()
     {
         topPanel = new JPanel();
-        topPanel.setBackground(Color.GREEN);
+        topPanel.setBackground(Color.BLACK);
 		topPanel.setPreferredSize(new Dimension(0, 50));
 		topPanel.setVisible(true);
         topPanel.add(searchbar);
@@ -86,6 +88,7 @@ public class PlayerLookupPanel
         searchButton.setPreferredSize(new Dimension(100, 20));
         searchButton.setVisible(true);
         searchButton.setOpaque(true);
+        searchButton.setFocusable(false);
     }
 
     private void setupListen()
