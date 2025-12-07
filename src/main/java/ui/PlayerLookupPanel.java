@@ -3,10 +3,11 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import model.Player;
-
+import service.PokerService;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 public class PlayerLookupPanel 
 {
@@ -19,9 +20,11 @@ public class PlayerLookupPanel
     private JFrame thisFrame;
     private JTextField searchbar;
     private JButton searchButton;
+    private PokerService ps;
 
     public PlayerLookupPanel()
     {
+        ps = PokerService.getInstance();
         setupElements();
         setupListen();
         setupPanels();
@@ -105,18 +108,26 @@ public class PlayerLookupPanel
     private void searchButtonPress()
     {
         String search = searchbar.getText();
+        List<Player> x;
         if(search != "");
         {
-            //Search data base for any results
+            x = ps.searchPlayersByName(search);        
         }
-
-        updateResults();
+        
+        updateResults(x);
     }
 
     //update the ui once a search is done
-    private void updateResults()
+    private void updateResults(List<Player> x)
     {
-        
+        JButton current = new JButton(x.get(0).getName());
+        current.setContentAreaFilled(false);
+        current.setBackground(Color.GRAY);
+        current.setPreferredSize(new Dimension(100, 20));
+        current.setVisible(true);
+        current.setOpaque(true);
+        current.setFocusable(false);
+        midPanel.add(current);
     }
 
 
