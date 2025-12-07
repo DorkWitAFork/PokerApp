@@ -113,8 +113,11 @@ public class PlayerLookupPanel
         {
             x = ps.searchPlayersByName(search);        
         }
+        if(x != null)
+        {
+            updateResults(x);
+        }
         
-        updateResults(x);
     }
 
     //update the ui once a search is done
