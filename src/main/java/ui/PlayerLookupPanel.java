@@ -93,7 +93,30 @@ public class PlayerLookupPanel
 
     private void setupListen()
     {
+        searchButton.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e)
+            {
+                searchButtonPress();
+            }
+        });
+    }
 
+
+    private void searchButtonPress()
+    {
+        String search = searchbar.getText();
+        if(search != "");
+        {
+            //Search data base for any results
+        }
+
+        updateResults();
+    }
+
+    //update the ui once a search is done
+    private void updateResults()
+    {
+        
     }
 
 
